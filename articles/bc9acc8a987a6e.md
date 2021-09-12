@@ -97,7 +97,7 @@ for dags_dir in dags_dirs:
 
 一つずつ説明していきたいと思います。
 
-```
+```python
 default_args = {"owner": "sample", "retries": 2}
 volume_mount = k8s.V1VolumeMount(
     name="sample-data", mount_path="/sample-data", sub_path=None
@@ -119,7 +119,7 @@ else:
 - image: ここではローカル環境とそれ以外で分けています。ローカル以外では、ECRからContainer Imageを取得して来る想定です。同時にImage取得用の認証情報をSecretから取得してきています。
 そのためリモートクラスターで実行する際には、別途Image取得用のSecretの準備が必要になります。
 
-```
+```python
 with models.DAG(
     dag_id="node_jobs",
     schedule_interval=None,
@@ -135,7 +135,7 @@ with models.DAG(
 - is_paused_upon_creation: DAGの作成時に、Pause状態か否かです。
 - catchup: ここをTrueにすると、初回のジョブ実行時に開始時刻からさかのぼってジョブをすべて実行します。
 
-```
+```python
 node_jobs = KubernetesPodOperator(
         task_id="test_task",
         name="test",
